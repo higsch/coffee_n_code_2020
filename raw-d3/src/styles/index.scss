@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+h1 {
+  font-family: 'Cormorant Upright', serif;
+  font-size: 3rem;
+  color: slategrey;
+}
+
+h2 {
+  font-family: 'Cormorant Upright', serif;
+  font-size: 1.3rem;
+  color: rgb(144, 147, 148);
+}
+
+#viz {
+  width: 100%;
+  height: 50%;
+  margin: 1rem 0;
+}
