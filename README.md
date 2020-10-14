@@ -1,4 +1,4 @@
-# Coffe 'n' Code August 2020
+# Coffe 'n' Code August & October 2020
 
 ## Want to join and live code?
 
@@ -26,7 +26,7 @@ Watch your visual at `localhost:8080` in your browser.
 Code!
 
 ## Explore
-Have a look at the other folders and see different implementations of the visual.
+Have a look at the other folders and see different implementations of the visual. Setup works as detailed above.
 
 ### `raw-d3`
 Contains the completed live code.
