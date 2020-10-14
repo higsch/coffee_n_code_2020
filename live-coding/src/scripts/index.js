@@ -35,6 +35,4 @@ function createViz(data) {
     h: 50
   };
 
-  
-
 }
