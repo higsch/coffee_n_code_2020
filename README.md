@@ -31,5 +31,5 @@ Have a look at the other folders and see different implementations of the visual
 ### `raw-d3`
 Contains the completed live code.
 
-### `bump-steam-graph`
+### `bump-stream-graph`
 Contains an advanced version using ranks for the journals in each year. This version also uses Svelte as a wrapper. But there are better ways to combine Svelte with D3, e.g. check out my talk [here](https://www.youtube.com/watch?v=bnd64ZrHC0U).

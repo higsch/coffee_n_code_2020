@@ -19238,10 +19238,10 @@ var app = (function () {
     			t1 = space();
     			create_component(legend.$$.fragment);
     			attr_dev(div0, "class", "tooltip svelte-b1l43m");
-    			add_location(div0, file$1, 156, 0, 4736);
+    			add_location(div0, file$1, 156, 0, 4743);
     			attr_dev(div1, "id", "viz");
     			attr_dev(div1, "class", "svelte-b1l43m");
-    			add_location(div1, file$1, 157, 0, 4784);
+    			add_location(div1, file$1, 157, 0, 4791);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -19324,7 +19324,7 @@ var app = (function () {
 
     		// console.log(journalRanks)
     		// stack layout
-    		const steam = stack().offset(silhouette).keys(journals.map(j => j.issn))(data);
+    		const stream = stack().offset(silhouette).keys(journals.map(j => j.issn))(data);
 
     		// calculate ranks and ranges based on years
     		const ranks = data.map((d, yearIndex) => {
@@ -19336,7 +19336,7 @@ var app = (function () {
     				...d,
     				year,
     				rank: i,
-    				coords: steam.find(s => s.key === d.issn)[yearIndex]
+    				coords: stream.find(s => s.key === d.issn)[yearIndex]
     			}));
 
     			return {
@@ -19358,9 +19358,9 @@ var app = (function () {
     			});
     		});
 
-    		const updatedSteam = [...steam];
+    		const updatedStream = [...stream];
 
-    		updatedSteam.forEach(d => {
+    		updatedStream.forEach(d => {
     			let { key, index, ...coords } = d;
     			const updated = ranks.map(d => d.values).flat().filter(d => d.issn === key);
 
@@ -19372,7 +19372,7 @@ var app = (function () {
     		});
 
     		// y scale
-    		const allYValues = updatedSteam.map(d => d.map(d => [d[0], d[1]])).flat(2);
+    		const allYValues = updatedStream.map(d => d.map(d => [d[0], d[1]])).flat(2);
 
     		const yScale = linear$2().domain(extent(allYValues)).range([height - margin.v, margin.v]);
 
@@ -19382,7 +19382,7 @@ var app = (function () {
     		// create svg
     		const svg = select(viz).append("svg").attr("width", width).attr("height", height);
 
-    		svg.selectAll("path").data(updatedSteam).join("path").attr("fill", d => journals.find(j => j.issn === d.key).color).attr("fill-opacity", 0.8).attr("d", stackArea).on("mousemove", function (d) {
+    		svg.selectAll("path").data(updatedStream).join("path").attr("fill", d => journals.find(j => j.issn === d.key).color).attr("fill-opacity", 0.8).attr("d", stackArea).on("mousemove", function (d) {
     			select(this).transition().duration(100).style("fill-opacity", 1);
     			d3Tooltip.transition().duration(100).style("opacity", 0.9);
     			d3Tooltip.html(journals.find(j => j.issn === d.key).name).style("left", event.pageX + "px").style("top", event.pageY - 28 + "px");

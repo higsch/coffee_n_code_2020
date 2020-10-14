@@ -47,7 +47,7 @@ function createViz(data) {
     .range([margin.h, width - margin.h]);
 
   // stack layout
-  const steam = d3.stack()
+  const stream = d3.stack()
     .offset(d3.stackOffsetSilhouette)
     .keys(journals.map((j) => j.issn))
     (data);
@@ -61,7 +61,7 @@ function createViz(data) {
   //     ...d,
   //     year,
   //     rank: i,
-  //     coords: steam.find((s) => s.key === d.issn)[yearIndex]
+  //     coords: stream.find((s) => s.key === d.issn)[yearIndex]
   //   }));
   //   return({
   //     range: d3.extent(ranks.map((r) => r.coords).flat()),
@@ -81,8 +81,8 @@ function createViz(data) {
   //   });
   // });
 
-  // const updatedSteam = [...steam];
-  // updatedSteam.forEach((d) => {
+  // const updatedStream = [...stream];
+  // updatedStream.forEach((d) => {
   //   let { key, index, ...coords } = d;
   //   const updated = ranks.map((d) => d.values).flat().filter((d) => d.issn === key);
   //   Object.values(coords).forEach((d) => {
@@ -93,7 +93,7 @@ function createViz(data) {
   // });
 
   // y scale
-  const allYValues = steam.map((d) => d.map((d) => [d[0], d[1]])).flat(2);
+  const allYValues = stream.map((d) => d.map((d) => [d[0], d[1]])).flat(2);
                       
   const yScale = d3.scaleLinear()
     .domain(d3.extent(allYValues))
@@ -112,7 +112,7 @@ function createViz(data) {
     .attr('height', height);
 
   svg.selectAll('path')
-    .data(steam)
+    .data(stream)
     .join('path')
     .attr('fill', (d) => journals.find((j) => j.issn === d.key).color)
     .attr('fill-opacity', 0.8)
