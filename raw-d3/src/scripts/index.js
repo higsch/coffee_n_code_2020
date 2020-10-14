@@ -2,10 +2,6 @@ import '../styles/index.scss';
 import * as d3 from 'd3';
 import journals from './journals';
 
-if (process.env.NODE_ENV === 'development') {
-  require('../index.html');
-}
-
 // read in the data
 d3.csv('/data/scilifelab-publications.csv', (d) => ({
   issn: d.ISSN,
@@ -41,56 +37,16 @@ function createViz(data) {
   // remove old elements
   viz.selectAll('*').remove();
 
+  // stack layout
+  const stream = d3.stack()
+  .offset(d3.stackOffsetSilhouette)
+  .keys(journals.map((j) => j.issn))
+  (data);
+
   // x scale
   const xScale = d3.scaleLinear()
     .domain(d3.extent(data.map((d) => +d.year)))
     .range([margin.h, width - margin.h]);
-
-  // stack layout
-  const stream = d3.stack()
-    .offset(d3.stackOffsetSilhouette)
-    .keys(journals.map((j) => j.issn))
-    (data);
-
-  // // calculate ranks and ranges based on years
-  // const ranks = data.map((d, yearIndex) => {
-  //   const { year, ...vals } = d;
-  //   const num = Object.values(vals).map((d, i) => ({issn: Object.keys(vals)[i], num: d}));
-  //   const sortedNum = [...num].sort((a, b) => a.num - b.num);
-  //   const ranks = sortedNum.map((d, i) => ({
-  //     ...d,
-  //     year,
-  //     rank: i,
-  //     coords: stream.find((s) => s.key === d.issn)[yearIndex]
-  //   }));
-  //   return({
-  //     range: d3.extent(ranks.map((r) => r.coords).flat()),
-  //     values: ranks
-  //   });
-  // });
-
-  // // recalculate coordinates based on ranks and ranges
-  // ranks.forEach((d) => {
-  //   const { range, values } = d;
-  //   const rankRange = d3.range(values.length);
-  //   rankRange.forEach((r, i) => {
-  //     const point = values.find((v) => v.rank === r);
-  //     const previousEndCoord = i > 0 ? values[i - 1].bumpCoords[1] : range[0];
-  //     const bumpCoords = [previousEndCoord, previousEndCoord + point.num];
-  //     point.bumpCoords = bumpCoords;
-  //   });
-  // });
-
-  // const updatedStream = [...stream];
-  // updatedStream.forEach((d) => {
-  //   let { key, index, ...coords } = d;
-  //   const updated = ranks.map((d) => d.values).flat().filter((d) => d.issn === key);
-  //   Object.values(coords).forEach((d) => {
-  //     const updatedCoords = updated.find((c) => c.year === d.data.year);
-  //     d[0] = updatedCoords.bumpCoords[0];
-  //     d[1] = updatedCoords.bumpCoords[1];
-  //   });
-  // });
 
   // y scale
   const allYValues = stream.map((d) => d.map((d) => [d[0], d[1]])).flat(2);
@@ -111,6 +67,7 @@ function createViz(data) {
     .attr('width', width)
     .attr('height', height);
 
+  // add graph to svg
   svg.selectAll('path')
     .data(stream)
     .join('path')
